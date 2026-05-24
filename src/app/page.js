@@ -293,11 +293,11 @@ export default function LandingPage() {
           </div>
           
           <footer className="border-t border-slate-200 py-8 text-center text-slate-500 text-sm bg-white">
-            <p>© {new Date().getFullYear()} IELTS Mastery AI. Built by Antigravity.</p>
+            <p>© {new Date().getFullYear()} IELTS Mastery build by Wasee</p>
             <div className="flex justify-center gap-6 mt-4">
-              <a href="#" className="hover:text-slate-800 transition-colors">Privacy</a>
-              <a href="#" className="hover:text-slate-800 transition-colors">Terms</a>
-              <a href="#" className="hover:text-slate-800 transition-colors">Contact</a>
+              <Link href="/privacy" className="hover:text-slate-800 transition-colors">Privacy</Link>
+              <Link href="/terms" className="hover:text-slate-800 transition-colors">Terms</Link>
+              <Link href="/contact" className="hover:text-slate-800 transition-colors">Contact</Link>
             </div>
           </footer>
         </section>
