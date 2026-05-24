@@ -34,6 +34,27 @@ const answerKey10_4 = {
   34: "metal / metals", 35: "space", 36: "memory", 37: "solar", 38: "oil", 39: "waste", 40: "tests"
 }
 
+const answerKey11_4 = {
+  1: "secondary", 2: "flute", 3: "cinema", 4: "concert", 5: "market", 6: "bythwaite", 7: "actor", 8: "A", 9: "B", 10: "C",
+  11: "E", 12: "D", 13: "G", 14: "B", 15: "C", 16: "A", 17: "F", 18: "H", 19: "C", 20: "B",
+  27: "C", 28: "A", 29: "A", 30: "C",
+  31: "dry", 32: "hard", 33: "sugar / sugars", 34: "roots", 35: "moist / damp / wet", 36: "variety", 37: "cattle", 38: "gardens / gardening", 39: "grasses", 40: "payment / payments / money"
+}
+
+const answerKey11_3 = {
+  1: "B", 2: "C", 3: "B", 4: "A", 5: "C", 6: "A", 7: "birds", 8: "flowers", 9: "mushrooms", 10: "river",
+  11: "C", 12: "B", 13: "B", 14: "A", 15: "C", 16: "G", 17: "A", 18: "C", 19: "B", 20: "F",
+  21: "cave", 22: "tiger", 23: "dancing", 24: "crying", 25: "grass", 26: "scarf", 27: "A", 28: "C", 29: "D", 30: "B",
+  31: "attitude / attitudes", 32: "numbers", 33: "time / minutes", 34: "software", 35: "patients", 36: "emotions / feelings", 37: "income", 38: "comfortable", 39: "observation", 40: "analysis"
+}
+
+const answerKey11_2 = {
+  1: "hostel", 2: "buckleigh", 3: "pe9 7qt", 4: "waiter", 5: "politics", 6: "cycling", 7: "cinema", 8: "disabled", 9: "4.30 / half past four", 10: "07788 136711",
+  17: "G", 18: "D", 19: "A", 20: "F",
+  21: "A", 22: "A", 23: "C", 24: "B", 25: "B", 26: "B", 27: "A", 28: "C", 29: "A", 30: "C",
+  31: "social", 32: "factory", 33: "canal", 34: "bridge", 35: "box", 36: "screen", 37: "rubber", 38: "curved", 39: "curtains", 40: "international"
+}
+
 const answerKey11_1 = {
   1: "charlton", 2: "115 / one hundred and fifteen", 3: "cash", 4: "parking", 5: "music", 6: "entry", 7: "stage", 8: "code", 9: "floor / floors", 10: "decoration / decorations",
   11: "animal / animals", 12: "tool / tools", 13: "shoes", 14: "dog / dogs", 15: "F", 16: "G", 17: "D", 18: "H", 19: "C", 20: "A",
@@ -45,7 +66,7 @@ export const ExamContext = createContext();
 
 const checkAnswerText = (num, value, book, test) => {
   if (!value) return false;
-  const key = book === 10 && test === 2 ? answerKey10_2[num] : book === 10 && test === 3 ? answerKey10_3[num] : book === 10 && test === 4 ? answerKey10_4[num] : book === 11 && test === 1 ? answerKey11_1[num] : null;
+  const key = book === 10 && test === 2 ? answerKey10_2[num] : book === 10 && test === 3 ? answerKey10_3[num] : book === 10 && test === 4 ? answerKey10_4[num] : book === 11 && test === 1 ? answerKey11_1[num] : book === 11 && test === 2 ? answerKey11_2[num] : book === 11 && test === 3 ? answerKey11_3[num] : book === 11 && test === 4 ? answerKey11_4[num] : null;
   if (!key) return false;
   
   const normalize = (s) => s.toString().toLowerCase().trim();
@@ -60,7 +81,7 @@ const checkAnswerText = (num, value, book, test) => {
 const InlineInput = ({ num, width = "w-40" }) => {
   const { answers, handleAnswerChange, isSubmitted, currentBook, currentTest } = useContext(ExamContext);
   const isCorrect = isSubmitted ? checkAnswerText(num, answers[num], currentBook, currentTest) : null;
-  const correctAns = currentBook === 10 && currentTest === 2 ? answerKey10_2[num] : currentBook === 10 && currentTest === 3 ? answerKey10_3[num] : currentBook === 10 && currentTest === 4 ? answerKey10_4[num] : currentBook === 11 && currentTest === 1 ? answerKey11_1[num] : null;
+  const correctAns = currentBook === 10 && currentTest === 2 ? answerKey10_2[num] : currentBook === 10 && currentTest === 3 ? answerKey10_3[num] : currentBook === 10 && currentTest === 4 ? answerKey10_4[num] : currentBook === 11 && currentTest === 1 ? answerKey11_1[num] : currentBook === 11 && currentTest === 2 ? answerKey11_2[num] : currentBook === 11 && currentTest === 3 ? answerKey11_3[num] : currentBook === 11 && currentTest === 4 ? answerKey11_4[num] : null;
 
   return (
     <span className="relative inline-flex flex-col mx-1">
@@ -147,6 +168,44 @@ export default function ListeningModule() {
       const ans23_24 = answers['23_24'] || [];
       const key23_24 = ['B. Cost savings', 'C. An improved image'];
       ans23_24.forEach(ans => { if (key23_24.includes(ans)) total++; })
+    }
+    else if (currentBook === 11 && currentTest === 4) {
+      [...Array(40)].forEach((_, i) => {
+        const num = i + 1;
+        if (num >= 21 && num <= 26) return; 
+        if (checkAnswerText(num, answers[num], currentBook, currentTest)) total++;
+      })
+      
+      const ans21_22 = answers['21_22'] || [];
+      const key21_22 = ['B', 'D'];
+      ans21_22.forEach(ans => { if (key21_22.some(k => ans.startsWith(k))) total++; })
+      
+      const ans23_24 = answers['23_24'] || [];
+      const key23_24 = ['A', 'B'];
+      ans23_24.forEach(ans => { if (key23_24.some(k => ans.startsWith(k))) total++; })
+      
+      const ans25_26 = answers['25_26'] || [];
+      const key25_26 = ['B', 'E'];
+      ans25_26.forEach(ans => { if (key25_26.some(k => ans.startsWith(k))) total++; })
+    }
+    else if (currentBook === 11 && currentTest === 2) {
+      [...Array(40)].forEach((_, i) => {
+        const num = i + 1;
+        if (num >= 11 && num <= 16) return; 
+        if (checkAnswerText(num, answers[num], currentBook, currentTest)) total++;
+      })
+      
+      const ans11_12 = answers['11_12'] || [];
+      const key11_12 = ['A', 'B'];
+      ans11_12.forEach(ans => { if (key11_12.some(k => ans.startsWith(k))) total++; })
+      
+      const ans13_14 = answers['13_14'] || [];
+      const key13_14 = ['B', 'D'];
+      ans13_14.forEach(ans => { if (key13_14.some(k => ans.startsWith(k))) total++; })
+      
+      const ans15_16 = answers['15_16'] || [];
+      const key15_16 = ['C', 'E'];
+      ans15_16.forEach(ans => { if (key15_16.some(k => ans.startsWith(k))) total++; })
     }
     else {
       [...Array(40)].forEach((_, i) => {
@@ -1659,11 +1718,720 @@ export default function ListeningModule() {
     }
   }
 
+  const renderBook11Test2 = () => {
+    return (
+      <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
+        {/* Section 1 */}
+        {currentSection === 1 && (
+          <div className="bg-white rounded-2xl p-6 md:p-10 shadow-sm border border-slate-200">
+            <div className="mb-8 flex items-center justify-between border-b border-slate-100 pb-4">
+              <h3 className="text-2xl font-bold text-slate-800 flex items-center gap-2">
+                <BookOpen className="text-blue-500 h-6 w-6" /> Section 1
+              </h3>
+              <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200 font-semibold px-3 py-1">Questions 1-10</Badge>
+            </div>
+            
+            <div className="space-y-8 max-w-4xl mx-auto">
+              <div className="bg-blue-50/50 p-6 rounded-xl border border-blue-100 shadow-sm mb-6">
+                <p className="font-semibold flex items-center gap-2 text-slate-700">
+                  <AlertCircle className="h-5 w-5 text-blue-500" />
+                  Complete the notes below. Write ONE WORD AND/OR A NUMBER for each answer.
+                </p>
+              </div>
+
+              <div className="bg-white p-6 md:p-8 rounded-xl border border-slate-200 shadow-sm">
+                <h4 className="text-xl font-bold mb-6 text-center text-slate-800 uppercase tracking-wider">Enquiry about joining Youth Council</h4>
+                
+                <div className="space-y-6">
+                  <div className="flex flex-col gap-2 border-b border-slate-100 pb-4">
+                    <span className="font-semibold text-slate-700">Name: Roger Brown</span>
+                  </div>
+                  <div className="flex flex-col gap-2 border-b border-slate-100 pb-4">
+                    <span className="font-semibold text-slate-700">Age: 18</span>
+                  </div>
+                  <div className="flex flex-col gap-2 border-b border-slate-100 pb-4">
+                    <span className="font-semibold text-slate-700 flex items-center flex-wrap gap-2">
+                      Currently staying in a <span className="font-bold text-slate-500 mx-2">1.</span>
+                      <InlineInput num={1} /> during the week
+                    </span>
+                  </div>
+                  <div className="flex flex-col gap-2 border-b border-slate-100 pb-4">
+                    <span className="font-semibold text-slate-700 flex items-center flex-wrap gap-2">
+                      Postal address: <span className="font-bold text-slate-500 mx-2">2.</span>
+                      <InlineInput num={2} /> Street, Stamford, Lincs
+                    </span>
+                  </div>
+                  <div className="flex flex-col gap-2 border-b border-slate-100 pb-4">
+                    <span className="font-semibold text-slate-700 flex items-center flex-wrap gap-2">
+                      Postcode: <span className="font-bold text-slate-500 mx-2">3.</span>
+                      <InlineInput num={3} width="w-32" />
+                    </span>
+                  </div>
+                  <div className="flex flex-col gap-2 border-b border-slate-100 pb-4">
+                    <span className="font-semibold text-slate-700 flex items-center flex-wrap gap-2">
+                      Occupation: student and part-time <span className="font-bold text-slate-500 mx-2">4.</span>
+                      <InlineInput num={4} />
+                    </span>
+                  </div>
+                  <div className="flex flex-col gap-2 border-b border-slate-100 pb-4">
+                    <span className="font-semibold text-slate-700 flex items-center flex-wrap gap-2">
+                      Studying <span className="font-bold text-slate-500 mx-2">5.</span>
+                      <InlineInput num={5} /> (major subject) and history (minor subject)
+                    </span>
+                  </div>
+                  <div className="flex flex-col gap-2 border-b border-slate-100 pb-4">
+                    <span className="font-semibold text-slate-700 flex items-center flex-wrap gap-2">
+                      Hobbies: does a lot of <span className="font-bold text-slate-500 mx-2">6.</span>
+                      <InlineInput num={6} />, and is interested in the <span className="font-bold text-slate-500 mx-2">7.</span>
+                      <InlineInput num={7} />
+                    </span>
+                  </div>
+                  <div className="flex flex-col gap-2 border-b border-slate-100 pb-4">
+                    <span className="font-semibold text-slate-700 flex items-center flex-wrap gap-2">
+                      On Youth Council, wants to work with young people who are <span className="font-bold text-slate-500 mx-2">8.</span>
+                      <InlineInput num={8} />
+                    </span>
+                  </div>
+                  <div className="flex flex-col gap-2 border-b border-slate-100 pb-4">
+                    <span className="font-semibold text-slate-700 flex items-center flex-wrap gap-2">
+                      Will come to talk to the Elections Officer next Monday at <span className="font-bold text-slate-500 mx-2">9.</span>
+                      <InlineInput num={9} width="w-24" /> pm
+                    </span>
+                  </div>
+                  <div className="flex flex-col gap-2 border-b border-slate-100 pb-4">
+                    <span className="font-semibold text-slate-700 flex items-center flex-wrap gap-2">
+                      Mobile number: <span className="font-bold text-slate-500 mx-2">10.</span>
+                      <InlineInput num={10} />
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Section 2 */}
+        {currentSection === 2 && (
+          <div className="bg-white rounded-2xl p-6 md:p-10 shadow-sm border border-slate-200">
+            <div className="mb-8 flex items-center justify-between border-b border-slate-100 pb-4">
+              <h3 className="text-2xl font-bold text-slate-800 flex items-center gap-2">
+                <BookOpen className="text-emerald-500 h-6 w-6" /> Section 2
+              </h3>
+              <Badge variant="outline" className="bg-emerald-50 text-emerald-700 border-emerald-200 font-semibold px-3 py-1">Questions 11-20</Badge>
+            </div>
+            
+            <div className="space-y-8 max-w-4xl mx-auto">
+              {/* Q11-12 */}
+              <div className="bg-emerald-50/50 p-6 rounded-xl border border-emerald-100 shadow-sm mb-6">
+                <p className="font-semibold flex items-center gap-2 text-slate-700 mb-2">
+                  <AlertCircle className="h-5 w-5 text-emerald-500" />
+                  Questions 11 and 12
+                </p>
+                <p className="text-slate-600">Choose TWO letters, A-E. Which TWO changes have been made so far during the refurbishment of the theatre?</p>
+              </div>
+
+              <div className="space-y-4 mb-10 pl-4">
+                {[
+                  "A. Some rooms now have a different use.",
+                  "B. A different type of seating has been installed.",
+                  "C. An elevator has been installed.",
+                  "D. The outside of the building has been repaired.",
+                  "E. Extra seats have been added."
+                ].map((opt, i) => {
+                  const letter = opt.charAt(0);
+                  const isChecked = (answers['11_12'] || []).includes(letter);
+                  const isCorrect = isSubmitted ? ['A', 'B'].includes(letter) : null;
+                  
+                  return (
+                    <label key={i} className={`flex items-start gap-3 p-3 rounded-lg border transition-colors cursor-pointer ${
+                      isSubmitted && isCorrect && isChecked ? 'bg-emerald-50 border-emerald-200' :
+                      isSubmitted && !isCorrect && isChecked ? 'bg-rose-50 border-rose-200' :
+                      isSubmitted && isCorrect && !isChecked ? 'bg-emerald-50/50 border-emerald-200' :
+                      isChecked ? 'bg-blue-50 border-blue-200' : 'bg-white border-slate-100 hover:bg-slate-50'
+                    }`}>
+                      <input 
+                        type="checkbox" 
+                        className="mt-1"
+                        checked={isChecked}
+                        onChange={(e) => {
+                          const current = [...(answers['11_12'] || [])];
+                          if (e.target.checked) {
+                            if (current.length < 2) current.push(letter);
+                          } else {
+                            const idx = current.indexOf(letter);
+                            if (idx > -1) current.splice(idx, 1);
+                          }
+                          handleAnswerChange('11_12', current);
+                        }}
+                        disabled={isSubmitted}
+                      />
+                      <span className={isSubmitted && isCorrect ? 'font-semibold text-emerald-700' : 'text-slate-700'}>{opt}</span>
+                    </label>
+                  )
+                })}
+              </div>
+
+              {/* Q13-14 */}
+              <div className="bg-emerald-50/50 p-6 rounded-xl border border-emerald-100 shadow-sm mb-6 mt-8">
+                <p className="font-semibold flex items-center gap-2 text-slate-700 mb-2">
+                  <AlertCircle className="h-5 w-5 text-emerald-500" />
+                  Questions 13 and 14
+                </p>
+                <p className="text-slate-600">Choose TWO letters, A-E. Which TWO facilities does the theatre currently offer to the public?</p>
+              </div>
+
+              <div className="space-y-4 mb-10 pl-4">
+                {[
+                  "A. Rooms for hire",
+                  "B. Backstage tours",
+                  "C. Hire of costumes",
+                  "D. A bookshop",
+                  "E. A café"
+                ].map((opt, i) => {
+                  const letter = opt.charAt(0);
+                  const isChecked = (answers['13_14'] || []).includes(letter);
+                  const isCorrect = isSubmitted ? ['B', 'D'].includes(letter) : null;
+                  
+                  return (
+                    <label key={i} className={`flex items-start gap-3 p-3 rounded-lg border transition-colors cursor-pointer ${
+                      isSubmitted && isCorrect && isChecked ? 'bg-emerald-50 border-emerald-200' :
+                      isSubmitted && !isCorrect && isChecked ? 'bg-rose-50 border-rose-200' :
+                      isSubmitted && isCorrect && !isChecked ? 'bg-emerald-50/50 border-emerald-200' :
+                      isChecked ? 'bg-blue-50 border-blue-200' : 'bg-white border-slate-100 hover:bg-slate-50'
+                    }`}>
+                      <input 
+                        type="checkbox" 
+                        className="mt-1"
+                        checked={isChecked}
+                        onChange={(e) => {
+                          const current = [...(answers['13_14'] || [])];
+                          if (e.target.checked) {
+                            if (current.length < 2) current.push(letter);
+                          } else {
+                            const idx = current.indexOf(letter);
+                            if (idx > -1) current.splice(idx, 1);
+                          }
+                          handleAnswerChange('13_14', current);
+                        }}
+                        disabled={isSubmitted}
+                      />
+                      <span className={isSubmitted && isCorrect ? 'font-semibold text-emerald-700' : 'text-slate-700'}>{opt}</span>
+                    </label>
+                  )
+                })}
+              </div>
+
+              {/* Q15-16 */}
+              <div className="bg-emerald-50/50 p-6 rounded-xl border border-emerald-100 shadow-sm mb-6 mt-8">
+                <p className="font-semibold flex items-center gap-2 text-slate-700 mb-2">
+                  <AlertCircle className="h-5 w-5 text-emerald-500" />
+                  Questions 15 and 16
+                </p>
+                <p className="text-slate-600">Choose TWO letters, A-E. Which TWO workshops does the theatre currently offer?</p>
+              </div>
+
+              <div className="space-y-4 mb-10 pl-4">
+                {[
+                  "A. Sound",
+                  "B. Acting",
+                  "C. Making puppets",
+                  "D. Make-up",
+                  "E. Lighting"
+                ].map((opt, i) => {
+                  const letter = opt.charAt(0);
+                  const isChecked = (answers['15_16'] || []).includes(letter);
+                  const isCorrect = isSubmitted ? ['C', 'E'].includes(letter) : null;
+                  
+                  return (
+                    <label key={i} className={`flex items-start gap-3 p-3 rounded-lg border transition-colors cursor-pointer ${
+                      isSubmitted && isCorrect && isChecked ? 'bg-emerald-50 border-emerald-200' :
+                      isSubmitted && !isCorrect && isChecked ? 'bg-rose-50 border-rose-200' :
+                      isSubmitted && isCorrect && !isChecked ? 'bg-emerald-50/50 border-emerald-200' :
+                      isChecked ? 'bg-blue-50 border-blue-200' : 'bg-white border-slate-100 hover:bg-slate-50'
+                    }`}>
+                      <input 
+                        type="checkbox" 
+                        className="mt-1"
+                        checked={isChecked}
+                        onChange={(e) => {
+                          const current = [...(answers['15_16'] || [])];
+                          if (e.target.checked) {
+                            if (current.length < 2) current.push(letter);
+                          } else {
+                            const idx = current.indexOf(letter);
+                            if (idx > -1) current.splice(idx, 1);
+                          }
+                          handleAnswerChange('15_16', current);
+                        }}
+                        disabled={isSubmitted}
+                      />
+                      <span className={isSubmitted && isCorrect ? 'font-semibold text-emerald-700' : 'text-slate-700'}>{opt}</span>
+                    </label>
+                  )
+                })}
+              </div>
+
+              {/* Q17-20 Map */}
+              <div className="bg-emerald-50/50 p-6 rounded-xl border border-emerald-100 shadow-sm mb-6 mt-12">
+                <p className="font-semibold flex items-center gap-2 text-slate-700 mb-2">
+                  <AlertCircle className="h-5 w-5 text-emerald-500" />
+                  Questions 17-20
+                </p>
+                <p className="text-slate-600">Label the plan below. Write the correct letter, A-G, next to Questions 17-20.</p>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                <div className="flex justify-center p-4 bg-slate-50 rounded-lg border border-slate-200 shadow-inner">
+                  <div className="text-center font-bold text-slate-500 p-8">
+                    [Ground Floor Plan of Theatre]<br />
+                    A-G marked on map
+                  </div>
+                </div>
+                
+                <div className="space-y-4">
+                  {[
+                    { num: 17, text: "box office" },
+                    { num: 18, text: "theatre manager's office" },
+                    { num: 19, text: "lighting box" },
+                    { num: 20, text: "artistic director's office" }
+                  ].map(item => (
+                    <div key={item.num} className="flex items-center gap-4 border-b border-slate-100 pb-3">
+                      <span className="font-bold text-slate-500 w-8">{item.num}.</span>
+                      <span className="text-slate-700 flex-1">{item.text}</span>
+                      <InlineInput num={item.num} width="w-16" />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Section 3 */}
+        {currentSection === 3 && (
+          <div className="bg-white rounded-2xl p-6 md:p-10 shadow-sm border border-slate-200">
+            <div className="mb-8 flex items-center justify-between border-b border-slate-100 pb-4">
+              <h3 className="text-2xl font-bold text-slate-800 flex items-center gap-2">
+                <BookOpen className="text-fuchsia-500 h-6 w-6" /> Section 3
+              </h3>
+              <Badge variant="outline" className="bg-fuchsia-50 text-fuchsia-700 border-fuchsia-200 font-semibold px-3 py-1">Questions 21-30</Badge>
+            </div>
+            
+            <div className="space-y-8 max-w-4xl mx-auto">
+              <div className="bg-fuchsia-50/50 p-6 rounded-xl border border-fuchsia-100 shadow-sm mb-6">
+                <p className="font-semibold flex items-center gap-2 text-slate-700">
+                  <AlertCircle className="h-5 w-5 text-fuchsia-500" />
+                  Questions 21-26. Choose the correct letter, A, B or C.
+                </p>
+              </div>
+
+              {[
+                {
+                  num: 21,
+                  q: "What did the speaker say about the history of Rocky Bay?",
+                  opts: ["A", "B", "C"]
+                },
+                {
+                  num: 22,
+                  q: "What is the advice for visitors to the museum?",
+                  opts: ["A", "B", "C"]
+                },
+                {
+                  num: 23,
+                  q: "What does the speaker say about the museum's educational activities?",
+                  opts: ["A", "B", "C"]
+                },
+                {
+                  num: 24,
+                  q: "What should the students do when they arrive at the museum?",
+                  opts: ["A", "B", "C"]
+                },
+                {
+                  num: 25,
+                  q: "What did they decide to do about the project?",
+                  opts: ["A", "B", "C"]
+                },
+                {
+                  num: 26,
+                  q: "What does the speaker say about the next field trip?",
+                  opts: ["A", "B", "C"]
+                }
+              ].map(item => (
+                <div key={item.num} className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm hover:border-slate-300 transition-colors">
+                  <p className="font-bold text-slate-800 mb-4 text-lg">
+                    <span className="text-slate-400 mr-2">{item.num}.</span> {item.q}
+                  </p>
+                  <div className="space-y-3 pl-8">
+                    {item.opts.map((opt, i) => {
+                      const isChecked = answers[item.num] === opt;
+                      const isActualCorrect = answerKey11_2[item.num] === opt;
+                      
+                      return (
+                        <label key={i} className={`flex items-start gap-3 p-3 rounded-lg border transition-colors cursor-pointer ${
+                          isSubmitted && isActualCorrect && isChecked ? 'bg-emerald-50 border-emerald-200' :
+                          isSubmitted && !isActualCorrect && isChecked ? 'bg-rose-50 border-rose-200' :
+                          isSubmitted && isActualCorrect && !isChecked ? 'bg-emerald-50/50 border-emerald-200' :
+                          isChecked ? 'bg-fuchsia-50 border-fuchsia-200' : 'bg-white border-slate-100 hover:bg-slate-50'
+                        }`}>
+                          <input 
+                            type="radio" 
+                            name={`q${item.num}`} 
+                            className="mt-1"
+                            checked={isChecked}
+                            onChange={() => handleAnswerChange(item.num, opt)}
+                            disabled={isSubmitted}
+                          />
+                          <span className={isSubmitted && isActualCorrect ? 'font-semibold text-emerald-700' : 'text-slate-700'}>{opt}. [Option Text]</span>
+                          {isSubmitted && isActualCorrect && <Check className="ml-auto text-emerald-500 h-5 w-5" />}
+                          {isSubmitted && isChecked && !isActualCorrect && <X className="ml-auto text-rose-500 h-5 w-5" />}
+                        </label>
+                      )
+                    })}
+                  </div>
+                </div>
+              ))}
+
+              <div className="bg-fuchsia-50/50 p-6 rounded-xl border border-fuchsia-100 shadow-sm mt-12 mb-6">
+                <p className="font-semibold flex items-center gap-2 text-slate-700">
+                  <AlertCircle className="h-5 w-5 text-fuchsia-500" />
+                  Questions 27-30. What action will the students take for each of the following tasks?
+                </p>
+                <div className="mt-4 p-4 bg-white rounded-lg border border-slate-200 space-y-2 text-slate-700">
+                  <div className="font-bold mb-2">Actions</div>
+                  <div>A. they will do this</div>
+                  <div>B. they will ask someone else to do this</div>
+                  <div>C. they will decide about this later</div>
+                </div>
+              </div>
+
+              <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                <div className="space-y-4">
+                  {[
+                    { num: 27, text: "Check the weather forecast" },
+                    { num: 28, text: "Prepare the questionnaire" },
+                    { num: 29, text: "Book the transport" },
+                    { num: 30, text: "Buy the tickets" }
+                  ].map(item => (
+                    <div key={item.num} className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 pb-4">
+                      <span className="font-semibold text-slate-700">
+                        <span className="font-bold text-slate-400 mr-2">{item.num}.</span>
+                        {item.text}
+                      </span>
+                      <InlineInput num={item.num} width="w-16" />
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+            </div>
+          </div>
+        )}
+
+        {/* Section 4 */}
+        {currentSection === 4 && (
+          <div className="bg-white rounded-2xl p-6 md:p-10 shadow-sm border border-slate-200">
+            <div className="mb-8 flex items-center justify-between border-b border-slate-100 pb-4">
+              <h3 className="text-2xl font-bold text-slate-800 flex items-center gap-2">
+                <BookOpen className="text-amber-500 h-6 w-6" /> Section 4
+              </h3>
+              <Badge variant="outline" className="bg-amber-50 text-amber-700 border-amber-200 font-semibold px-3 py-1">Questions 31-40</Badge>
+            </div>
+            
+            <div className="space-y-8 max-w-4xl mx-auto">
+              <div className="bg-amber-50/50 p-6 rounded-xl border border-amber-100 shadow-sm mb-6">
+                <p className="font-semibold flex items-center gap-2 text-slate-700">
+                  <AlertCircle className="h-5 w-5 text-amber-500" />
+                  Complete the notes below. Write ONE WORD ONLY for each answer.
+                </p>
+              </div>
+
+              <div className="bg-white p-6 md:p-10 rounded-xl border border-slate-200 shadow-sm">
+                <h4 className="text-2xl font-bold mb-8 text-center text-slate-800 tracking-wide">Designing a Public Building: The Taylor Concert Hall</h4>
+                
+                <div className="space-y-6 text-lg">
+                  <div className="font-bold text-slate-800 bg-slate-50 px-4 py-2 rounded-lg border-l-4 border-amber-500">Introduction</div>
+                  <div className="pl-6 space-y-4">
+                    <p className="flex items-center gap-2 text-slate-700">
+                      • The architect emphasizes the <span className="font-bold text-slate-400 mx-1">31.</span><InlineInput num={31} /> meaning of the building.
+                    </p>
+                    <p className="flex items-center gap-2 text-slate-700">
+                      • The building is located in a former <span className="font-bold text-slate-400 mx-1">32.</span><InlineInput num={32} />.
+                    </p>
+                  </div>
+
+                  <div className="font-bold text-slate-800 bg-slate-50 px-4 py-2 rounded-lg border-l-4 border-amber-500 mt-8">Exterior</div>
+                  <div className="pl-6 space-y-4">
+                    <p className="flex items-center gap-2 text-slate-700">
+                      • The entrance is approached by crossing a pedestrian <span className="font-bold text-slate-400 mx-1">33.</span><InlineInput num={33} /> over a <span className="font-bold text-slate-400 mx-1">34.</span><InlineInput num={34} />.
+                    </p>
+                    <p className="flex items-center gap-2 text-slate-700">
+                      • The main structure is designed to look like a simple <span className="font-bold text-slate-400 mx-1">35.</span><InlineInput num={35} />.
+                    </p>
+                    <p className="flex items-center gap-2 text-slate-700">
+                      • One of the exterior walls acts as a large <span className="font-bold text-slate-400 mx-1">36.</span><InlineInput num={36} /> for projecting images.
+                    </p>
+                  </div>
+
+                  <div className="font-bold text-slate-800 bg-slate-50 px-4 py-2 rounded-lg border-l-4 border-amber-500 mt-8">Interior</div>
+                  <div className="pl-6 space-y-4">
+                    <p className="flex items-center gap-2 text-slate-700">
+                      • The floor rests on massive <span className="font-bold text-slate-400 mx-1">37.</span><InlineInput num={37} /> pads to improve acoustics.
+                    </p>
+                    <p className="flex items-center gap-2 text-slate-700">
+                      • The ceiling has a <span className="font-bold text-slate-400 mx-1">38.</span><InlineInput num={38} /> shape.
+                    </p>
+                    <p className="flex items-center gap-2 text-slate-700">
+                      • Heavy <span className="font-bold text-slate-400 mx-1">39.</span><InlineInput num={39} /> can be drawn across the walls if necessary.
+                    </p>
+                  </div>
+                  
+                  <div className="font-bold text-slate-800 bg-slate-50 px-4 py-2 rounded-lg border-l-4 border-amber-500 mt-8">Conclusion</div>
+                  <div className="pl-6 space-y-4">
+                    <p className="flex items-center gap-2 text-slate-700">
+                      • The Concert Hall has become an <span className="font-bold text-slate-400 mx-1">40.</span><InlineInput num={40} /> symbol.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    )
+  }
+
+  const renderBook11Test3 = () => {
+    const renderOptions = (num, opts) => (
+      <div className="space-y-2 mt-2">
+        {opts.map((opt, i) => {
+          const isChecked = answers[num] === opt;
+          const isActualCorrect = answerKey11_3[num] === opt;
+          return (
+            <label key={i} className={`flex items-center gap-2 p-2 rounded border cursor-pointer ${
+              isSubmitted && isActualCorrect && isChecked ? 'bg-emerald-50 border-emerald-200' :
+              isSubmitted && !isActualCorrect && isChecked ? 'bg-rose-50 border-rose-200' :
+              isSubmitted && isActualCorrect && !isChecked ? 'bg-emerald-50/50 border-emerald-200' :
+              isChecked ? 'bg-blue-50 border-blue-200' : 'bg-white border-slate-100 hover:bg-slate-50'
+            }`}>
+              <input type="radio" checked={isChecked} onChange={() => handleAnswerChange(num, opt)} disabled={isSubmitted} />
+              <span className={isSubmitted && isActualCorrect ? 'font-semibold text-emerald-700' : 'text-slate-700'}>{opt}</span>
+            </label>
+          )
+        })}
+      </div>
+    );
+
+    return (
+      <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
+        {currentSection === 1 && (
+          <div className="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+            <h3 className="text-2xl font-bold mb-6 text-slate-800">Section 1</h3>
+            <div className="space-y-6">
+              {[1, 2, 3, 4, 5, 6].map(num => (
+                <div key={num} className="border-b border-slate-100 pb-4">
+                  <span className="font-bold text-slate-500 mr-2">{num}.</span>
+                  <span className="text-slate-700">Choose the correct letter, A, B or C.</span>
+                  {renderOptions(num, ['A', 'B', 'C'])}
+                </div>
+              ))}
+              {[7, 8, 9, 10].map(num => (
+                <div key={num} className="flex items-center gap-4 border-b border-slate-100 pb-4">
+                  <span className="font-bold text-slate-500">{num}.</span>
+                  <InlineInput num={num} />
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+        {currentSection === 2 && (
+          <div className="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+            <h3 className="text-2xl font-bold mb-6 text-slate-800">Section 2</h3>
+            <div className="space-y-6">
+              {[11, 12, 13, 14, 15].map(num => (
+                <div key={num} className="border-b border-slate-100 pb-4">
+                  <span className="font-bold text-slate-500 mr-2">{num}.</span>
+                  <span className="text-slate-700">Choose the correct letter, A, B or C.</span>
+                  {renderOptions(num, ['A', 'B', 'C'])}
+                </div>
+              ))}
+              {[16, 17, 18, 19, 20].map(num => (
+                <div key={num} className="flex items-center gap-4 border-b border-slate-100 pb-4">
+                  <span className="font-bold text-slate-500">{num}.</span>
+                  <span className="text-slate-700">Choose the correct letter, A-G.</span>
+                  <InlineInput num={num} width="w-16" />
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+        {currentSection === 3 && (
+          <div className="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+            <h3 className="text-2xl font-bold mb-6 text-slate-800">Section 3</h3>
+            <div className="space-y-6">
+              {[21, 22, 23, 24, 25, 26].map(num => (
+                <div key={num} className="flex items-center gap-4 border-b border-slate-100 pb-4">
+                  <span className="font-bold text-slate-500">{num}.</span>
+                  <InlineInput num={num} />
+                </div>
+              ))}
+              {[27, 28, 29, 30].map(num => (
+                <div key={num} className="flex items-center gap-4 border-b border-slate-100 pb-4">
+                  <span className="font-bold text-slate-500">{num}.</span>
+                  <span className="text-slate-700">Choose the correct letter, A, B, C or D.</span>
+                  <InlineInput num={num} width="w-16" />
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+        {currentSection === 4 && (
+          <div className="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+            <h3 className="text-2xl font-bold mb-6 text-slate-800">Section 4</h3>
+            <div className="space-y-4">
+              {[31, 32, 33, 34, 35, 36, 37, 38, 39, 40].map(num => (
+                <div key={num} className="flex items-center gap-4 border-b border-slate-100 pb-4">
+                  <span className="font-bold text-slate-500">{num}.</span>
+                  <InlineInput num={num} />
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    )
+  }
+
+  const renderBook11Test4 = () => {
+    const renderOptions = (num, opts, keyMap) => (
+      <div className="space-y-2 mt-2">
+        {opts.map((opt, i) => {
+          const isChecked = answers[num] === opt;
+          const isActualCorrect = keyMap[num] === opt;
+          return (
+            <label key={i} className={`flex items-center gap-2 p-2 rounded border cursor-pointer ${
+              isSubmitted && isActualCorrect && isChecked ? 'bg-emerald-50 border-emerald-200' :
+              isSubmitted && !isActualCorrect && isChecked ? 'bg-rose-50 border-rose-200' :
+              isSubmitted && isActualCorrect && !isChecked ? 'bg-emerald-50/50 border-emerald-200' :
+              isChecked ? 'bg-blue-50 border-blue-200' : 'bg-white border-slate-100 hover:bg-slate-50'
+            }`}>
+              <input type="radio" checked={isChecked} onChange={() => handleAnswerChange(num, opt)} disabled={isSubmitted} />
+              <span className={isSubmitted && isActualCorrect ? 'font-semibold text-emerald-700' : 'text-slate-700'}>{opt}</span>
+            </label>
+          )
+        })}
+      </div>
+    );
+
+    return (
+      <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
+        {currentSection === 1 && (
+          <div className="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+            <h3 className="text-2xl font-bold mb-6 text-slate-800">Section 1</h3>
+            <div className="space-y-6">
+              {[1, 2, 3, 4, 5, 6, 7].map(num => (
+                <div key={num} className="flex items-center gap-4 border-b border-slate-100 pb-4">
+                  <span className="font-bold text-slate-500">{num}.</span>
+                  <InlineInput num={num} />
+                </div>
+              ))}
+              {[8, 9, 10].map(num => (
+                <div key={num} className="border-b border-slate-100 pb-4">
+                  <span className="font-bold text-slate-500 mr-2">{num}.</span>
+                  <span className="text-slate-700">Choose the correct letter, A, B or C.</span>
+                  {renderOptions(num, ['A', 'B', 'C'], answerKey11_4)}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+        {currentSection === 2 && (
+          <div className="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+            <h3 className="text-2xl font-bold mb-6 text-slate-800">Section 2</h3>
+            <div className="space-y-6">
+              {[11, 12, 13, 14, 15, 16, 17, 18, 19, 20].map(num => (
+                <div key={num} className="flex items-center gap-4 border-b border-slate-100 pb-4">
+                  <span className="font-bold text-slate-500">{num}.</span>
+                  <span className="text-slate-700">Choose the correct letter, A-H.</span>
+                  <InlineInput num={num} width="w-16" />
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+        {currentSection === 3 && (
+          <div className="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+            <h3 className="text-2xl font-bold mb-6 text-slate-800">Section 3</h3>
+            <div className="space-y-6">
+              {[
+                { nums: "21_22", title: "Questions 21 and 22", correct: ['B', 'D'] },
+                { nums: "23_24", title: "Questions 23 and 24", correct: ['A', 'B'] },
+                { nums: "25_26", title: "Questions 25 and 26", correct: ['B', 'E'] }
+              ].map(group => (
+                <div key={group.nums} className="border-b border-slate-100 pb-6">
+                  <span className="font-bold text-slate-700 mb-2 block">{group.title}</span>
+                  <span className="text-slate-600 block mb-4">Choose TWO letters, A-E.</span>
+                  <div className="space-y-2">
+                    {['A', 'B', 'C', 'D', 'E'].map(letter => {
+                      const isChecked = (answers[group.nums] || []).includes(letter);
+                      const isCorrect = isSubmitted ? group.correct.includes(letter) : null;
+                      return (
+                        <label key={letter} className={`flex items-start gap-3 p-2 rounded-lg border transition-colors cursor-pointer ${
+                          isSubmitted && isCorrect && isChecked ? 'bg-emerald-50 border-emerald-200' :
+                          isSubmitted && !isCorrect && isChecked ? 'bg-rose-50 border-rose-200' :
+                          isSubmitted && isCorrect && !isChecked ? 'bg-emerald-50/50 border-emerald-200' :
+                          isChecked ? 'bg-blue-50 border-blue-200' : 'bg-white border-slate-100 hover:bg-slate-50'
+                        }`}>
+                          <input 
+                            type="checkbox" className="mt-1" checked={isChecked} disabled={isSubmitted}
+                            onChange={(e) => {
+                              const current = [...(answers[group.nums] || [])];
+                              if (e.target.checked) { if (current.length < 2) current.push(letter); }
+                              else { const idx = current.indexOf(letter); if (idx > -1) current.splice(idx, 1); }
+                              handleAnswerChange(group.nums, current);
+                            }}
+                          />
+                          <span className={isSubmitted && isCorrect ? 'font-semibold text-emerald-700' : 'text-slate-700'}>{letter}</span>
+                        </label>
+                      )
+                    })}
+                  </div>
+                </div>
+              ))}
+              {[27, 28, 29, 30].map(num => (
+                <div key={num} className="border-b border-slate-100 pb-4">
+                  <span className="font-bold text-slate-500 mr-2">{num}.</span>
+                  <span className="text-slate-700">Choose the correct letter, A, B or C.</span>
+                  {renderOptions(num, ['A', 'B', 'C'], answerKey11_4)}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+        {currentSection === 4 && (
+          <div className="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+            <h3 className="text-2xl font-bold mb-6 text-slate-800">Section 4</h3>
+            <div className="space-y-4">
+              {[31, 32, 33, 34, 35, 36, 37, 38, 39, 40].map(num => (
+                <div key={num} className="flex items-center gap-4 border-b border-slate-100 pb-4">
+                  <span className="font-bold text-slate-500">{num}.</span>
+                  <InlineInput num={num} />
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    )
+  }
+
   const renderSectionContent = () => {
     if (currentBook === 10 && currentTest === 2) return renderTest2();
     if (currentBook === 10 && currentTest === 3) return renderTest3();
     if (currentBook === 10 && currentTest === 4) return renderTest4();
     if (currentBook === 11 && currentTest === 1) return renderBook11Test1();
+    if (currentBook === 11 && currentTest === 2) return renderBook11Test2();
+    if (currentBook === 11 && currentTest === 3) return renderBook11Test3();
+    if (currentBook === 11 && currentTest === 4) return renderBook11Test4();
     return renderTest1(); 
   }
 
@@ -1672,6 +2440,9 @@ export default function ListeningModule() {
     if (currentBook === 10 && currentTest === 3) return "baF-agivhF8";
     if (currentBook === 10 && currentTest === 4) return "jnvpv3PZmz4";
     if (currentBook === 11 && currentTest === 1) return "qkbIkkO_WHE";
+    if (currentBook === 11 && currentTest === 2) return "so-ObjcFWfw";
+    if (currentBook === 11 && currentTest === 3) return "N7HRy3ryXYI";
+    if (currentBook === 11 && currentTest === 4) return "9DGO6x-_qLE";
     return "GlPAqNZmuaw"; 
   }
 
