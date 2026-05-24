@@ -13,19 +13,19 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "BrainSpark AI | Study Smarter",
-  description: "A premium AI-powered study platform for students.",
+  title: "IELTS Master | Listening Practice",
+  description: "A premium interactive platform for IELTS Listening test practice.",
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable} font-sans antialiased min-h-screen bg-background flex flex-col`}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="dark"
-          enableSystem
-          disableTransitionOnChange
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="light"
+            forcedTheme="light"
+            disableTransitionOnChange
         >
           <div className="relative flex min-h-screen flex-col">
             <div className="flex-1">{children}</div>

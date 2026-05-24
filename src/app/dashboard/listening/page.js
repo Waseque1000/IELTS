@@ -34,11 +34,18 @@ const answerKey10_4 = {
   34: "metal / metals", 35: "space", 36: "memory", 37: "solar", 38: "oil", 39: "waste", 40: "tests"
 }
 
+const answerKey11_1 = {
+  1: "charlton", 2: "115 / one hundred and fifteen", 3: "cash", 4: "parking", 5: "music", 6: "entry", 7: "stage", 8: "code", 9: "floor / floors", 10: "decoration / decorations",
+  11: "animal / animals", 12: "tool / tools", 13: "shoes", 14: "dog / dogs", 15: "F", 16: "G", 17: "D", 18: "H", 19: "C", 20: "A",
+  21: "C. science, technology, engineering or mathematics.", 22: "B", 23: "B", 24: "C", 25: "A", 26: "B", 27: "C", 28: "A", 29: "B", 30: "A",
+  31: "conservation", 32: "food / foods", 33: "surface", 34: "oxygen", 35: "mammals", 36: "ice", 37: "decline / declining", 38: "map", 39: "migration", 40: "consumption"
+}
+
 export const ExamContext = createContext();
 
 const checkAnswerText = (num, value, book, test) => {
   if (!value) return false;
-  const key = book === 10 && test === 2 ? answerKey10_2[num] : book === 10 && test === 3 ? answerKey10_3[num] : book === 10 && test === 4 ? answerKey10_4[num] : null;
+  const key = book === 10 && test === 2 ? answerKey10_2[num] : book === 10 && test === 3 ? answerKey10_3[num] : book === 10 && test === 4 ? answerKey10_4[num] : book === 11 && test === 1 ? answerKey11_1[num] : null;
   if (!key) return false;
   
   const normalize = (s) => s.toString().toLowerCase().trim();
@@ -53,7 +60,7 @@ const checkAnswerText = (num, value, book, test) => {
 const InlineInput = ({ num, width = "w-40" }) => {
   const { answers, handleAnswerChange, isSubmitted, currentBook, currentTest } = useContext(ExamContext);
   const isCorrect = isSubmitted ? checkAnswerText(num, answers[num], currentBook, currentTest) : null;
-  const correctAns = currentBook === 10 && currentTest === 2 ? answerKey10_2[num] : currentBook === 10 && currentTest === 3 ? answerKey10_3[num] : currentBook === 10 && currentTest === 4 ? answerKey10_4[num] : null;
+  const correctAns = currentBook === 10 && currentTest === 2 ? answerKey10_2[num] : currentBook === 10 && currentTest === 3 ? answerKey10_3[num] : currentBook === 10 && currentTest === 4 ? answerKey10_4[num] : currentBook === 11 && currentTest === 1 ? answerKey11_1[num] : null;
 
   return (
     <span className="relative inline-flex flex-col mx-1">
@@ -140,6 +147,12 @@ export default function ListeningModule() {
       const ans23_24 = answers['23_24'] || [];
       const key23_24 = ['B. Cost savings', 'C. An improved image'];
       ans23_24.forEach(ans => { if (key23_24.includes(ans)) total++; })
+    }
+    else {
+      [...Array(40)].forEach((_, i) => {
+        const num = i + 1;
+        if (checkAnswerText(num, answers[num], currentBook, currentTest)) total++;
+      })
     }
     
     setScore(total);
@@ -1405,10 +1418,252 @@ export default function ListeningModule() {
     }
   }
 
+  const renderBook11Test1 = () => {
+    switch (currentSection) {
+      case 1:
+        return (
+          <div className="space-y-8 animate-in slide-in-from-right-8 duration-500">
+            <Card className="bg-white border border-slate-200 rounded-3xl p-10 shadow-[0_8px_30px_rgb(0,0,0,0.04)] relative overflow-hidden transition-all">
+              <div className="absolute top-0 left-0 w-full h-1.5 bg-blue-500" />
+              <h3 className="text-3xl font-black mb-2 text-slate-800">Questions 1-10</h3>
+              <p className="text-slate-500 mb-8 font-medium">Complete the notes below. Write <strong className="text-slate-800 bg-slate-100 px-2 py-0.5 rounded">ONE WORD AND/OR A NUMBER</strong> for each answer.</p>
+              
+              <div className="bg-[#f8fafc] p-8 rounded-2xl border border-slate-200 text-lg leading-loose font-serif text-slate-700 shadow-sm">
+                <h4 className="font-black text-center text-3xl mb-8 tracking-widest font-sans text-slate-900 uppercase">Hiring a public room</h4>
+                
+                <div className="space-y-5">
+                  <div className="flex items-center text-slate-700 mb-6 bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+                    <span className="font-bold min-w-[200px] text-slate-500 uppercase tracking-widest text-sm">Example: Room Name:</span>
+                    <span className="text-slate-900 text-xl font-bold">the <span className="italic font-serif">Main Hall</span></span>
+                  </div>
+
+                  <h5 className="font-black mt-10 mb-6 text-blue-600 font-sans text-xl uppercase tracking-widest">Room and Cost</h5>
+                  <div className="flex items-center border-b border-slate-200 pb-5 pt-3">
+                    <span className="font-bold text-slate-500 w-8 shrink-0">1.</span>
+                    <span className="font-bold min-w-[200px] text-slate-800">Room to hire:</span>
+                    <span>the <InlineInput num="1" width="w-40" /> room (seats 100)</span>
+                  </div>
+                  <div className="flex items-center border-b border-slate-200 pb-5 pt-3">
+                    <span className="font-bold text-slate-500 w-8 shrink-0">2.</span>
+                    <span className="font-bold min-w-[200px] text-slate-800">Cost:</span>
+                    <span>£ <InlineInput num="2" width="w-32" /> for Saturday evening</span>
+                  </div>
+                  <div className="flex items-center border-b border-slate-200 pb-5 pt-3">
+                    <span className="font-bold text-slate-500 w-8 shrink-0">3.</span>
+                    <span className="font-bold min-w-[200px] text-slate-800">Deposit:</span>
+                    <span>£250 (payment must be made in <InlineInput num="3" width="w-40" />)</span>
+                  </div>
+                  <div className="flex items-center border-b border-slate-200 pb-5 pt-3">
+                    <span className="font-bold text-slate-500 w-8 shrink-0">4.</span>
+                    <span className="font-bold min-w-[200px] text-slate-800">Included:</span>
+                    <span>tables, chairs, and <InlineInput num="4" width="w-40" /></span>
+                  </div>
+
+                  <h5 className="font-black mt-10 mb-6 text-blue-600 font-sans text-xl uppercase tracking-widest">During the Event</h5>
+                  <div className="flex items-center border-b border-slate-200 pb-5 pt-3">
+                    <span className="font-bold text-slate-500 w-8 shrink-0">5.</span>
+                    <span className="font-bold min-w-[200px] text-slate-800">Rules:</span>
+                    <span>no <InlineInput num="5" width="w-40" /> after 11.30 pm</span>
+                  </div>
+                  <div className="flex items-center border-b border-slate-200 pb-5 pt-3">
+                    <span className="font-bold text-slate-500 w-8 shrink-0">6.</span>
+                    <span className="font-bold min-w-[200px] text-slate-800">Building access:</span>
+                    <span>must arrange <InlineInput num="6" width="w-40" /> for the building</span>
+                  </div>
+                  <div className="flex items-center border-b border-slate-200 pb-5 pt-3">
+                    <span className="font-bold text-slate-500 w-8 shrink-0">7.</span>
+                    <span className="font-bold min-w-[200px] text-slate-800">Setup:</span>
+                    <span>the <InlineInput num="7" width="w-32" /> is available for use</span>
+                  </div>
+                  
+                  <h5 className="font-black mt-10 mb-6 text-blue-600 font-sans text-xl uppercase tracking-widest">After the Event</h5>
+                  <div className="flex items-center border-b border-slate-200 pb-5 pt-3">
+                    <span className="font-bold text-slate-500 w-8 shrink-0">8.</span>
+                    <span className="font-bold min-w-[200px] text-slate-800">Cleaning cupboard:</span>
+                    <span>needs a <InlineInput num="8" width="w-40" /> to open</span>
+                  </div>
+                  <div className="flex items-center border-b border-slate-200 pb-5 pt-3">
+                    <span className="font-bold text-slate-500 w-8 shrink-0">9.</span>
+                    <span className="font-bold min-w-[200px] text-slate-800">Requirement:</span>
+                    <span>must wash the <InlineInput num="9" width="w-40" /></span>
+                  </div>
+                  <div className="flex items-center border-b border-slate-200 pb-5 pt-3">
+                    <span className="font-bold text-slate-500 w-8 shrink-0">10.</span>
+                    <span className="font-bold min-w-[200px] text-slate-800">Requirement:</span>
+                    <span>must take down any <InlineInput num="10" width="w-40" /></span>
+                  </div>
+
+                </div>
+              </div>
+            </Card>
+          </div>
+        )
+      case 2:
+        return (
+          <div className="space-y-8 animate-in slide-in-from-right-8 duration-500">
+            <Card className="bg-white border border-slate-200 rounded-3xl p-10 shadow-[0_8px_30px_rgb(0,0,0,0.04)] relative overflow-hidden transition-all">
+              <div className="absolute top-0 left-0 w-full h-1.5 bg-emerald-500" />
+              <h3 className="text-3xl font-black mb-2 text-slate-800">Questions 11-14</h3>
+              <p className="text-slate-500 mb-8 font-medium">Complete the notes below. Write <strong className="text-slate-800 bg-slate-100 px-2 py-0.5 rounded">ONE WORD ONLY</strong> for each answer.</p>
+              
+              <div className="bg-[#f8fafc] p-8 rounded-2xl border border-slate-200 text-lg leading-loose font-serif text-slate-700 shadow-sm mb-10">
+                <h4 className="font-black text-center text-3xl mb-8 tracking-widest font-sans text-slate-900 uppercase">Fiddy Working Heritage Farm</h4>
+                <p className="font-bold mb-4">Advice about visiting the farm</p>
+                <p className="mb-4">Visitors should:</p>
+                <ul className="list-disc ml-8 space-y-4">
+                  <li className="flex items-center"><span className="font-bold text-slate-500 w-8 shrink-0">11.</span> take care not to harm any <InlineInput num="11" width="w-32" /></li>
+                  <li className="flex items-center"><span className="font-bold text-slate-500 w-8 shrink-0">12.</span> not touch any <InlineInput num="12" width="w-32" /></li>
+                  <li className="flex items-center"><span className="font-bold text-slate-500 w-8 shrink-0">13.</span> wear <InlineInput num="13" width="w-32" /></li>
+                  <li className="flex items-center"><span className="font-bold text-slate-500 w-8 shrink-0">14.</span> not bring <InlineInput num="14" width="w-32" /> into the farm, with certain exceptions</li>
+                </ul>
+              </div>
+
+              <h3 className="text-3xl font-black mb-2 text-slate-800">Questions 15-20</h3>
+              <p className="text-slate-500 mb-8 font-medium">Label the map below. Write the correct letter, <strong className="text-slate-800 bg-slate-100 px-2 py-0.5 rounded">A-I</strong>, next to questions 15-20.</p>
+              
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+                <div className="bg-slate-50 p-6 rounded-2xl border border-slate-200 shadow-sm h-fit">
+                  <h4 className="font-black text-center text-lg mb-6 tracking-widest text-slate-900 uppercase">Map Letters</h4>
+                  <ul className="grid grid-cols-3 gap-4 font-serif text-slate-700 text-center font-bold">
+                    <li>A</li><li>B</li><li>C</li>
+                    <li>D</li><li>E</li><li>F</li>
+                    <li>G</li><li>H</li><li>I</li>
+                  </ul>
+                  <p className="mt-6 text-sm text-slate-500 italic text-center">Refer to the map in the Cambridge IELTS 11 Book.</p>
+                </div>
+
+                <div className="bg-[#f8fafc] p-8 rounded-2xl border border-slate-200 shadow-sm">
+                  <h4 className="font-black text-lg mb-6 tracking-widest text-slate-900 uppercase border-b border-slate-200 pb-4">Locations</h4>
+                  <ul className="space-y-6 text-lg font-serif">
+                    <li className="flex items-center justify-between"><span className="flex items-center gap-4"><span className="font-bold text-slate-500 w-8 shrink-0">15.</span> <span>Scarecrow</span></span> <InlineInput num="15" width="w-16" /></li>
+                    <li className="flex items-center justify-between"><span className="flex items-center gap-4"><span className="font-bold text-slate-500 w-8 shrink-0">16.</span> <span>Maze</span></span> <InlineInput num="16" width="w-16" /></li>
+                    <li className="flex items-center justify-between"><span className="flex items-center gap-4"><span className="font-bold text-slate-500 w-8 shrink-0">17.</span> <span>Café</span></span> <InlineInput num="17" width="w-16" /></li>
+                    <li className="flex items-center justify-between"><span className="flex items-center gap-4"><span className="font-bold text-slate-500 w-8 shrink-0">18.</span> <span>Black Barn</span></span> <InlineInput num="18" width="w-16" /></li>
+                    <li className="flex items-center justify-between"><span className="flex items-center gap-4"><span className="font-bold text-slate-500 w-8 shrink-0">19.</span> <span>Covered picnic area</span></span> <InlineInput num="19" width="w-16" /></li>
+                    <li className="flex items-center justify-between"><span className="flex items-center gap-4"><span className="font-bold text-slate-500 w-8 shrink-0">20.</span> <span>Fiddy House</span></span> <InlineInput num="20" width="w-16" /></li>
+                  </ul>
+                </div>
+              </div>
+            </Card>
+          </div>
+        )
+      case 3:
+        return (
+          <div className="space-y-8 animate-in slide-in-from-right-8 duration-500">
+            <Card className="bg-white border border-slate-200 rounded-3xl p-10 shadow-[0_8px_30px_rgb(0,0,0,0.04)] relative overflow-hidden transition-all">
+              <div className="absolute top-0 left-0 w-full h-1.5 bg-fuchsia-500" />
+              
+              <h3 className="text-3xl font-black mb-2 text-slate-800">Questions 21-30</h3>
+              <p className="text-slate-500 mb-8 font-medium">Choose the correct letter, <strong className="text-slate-800 bg-slate-100 px-2 py-0.5 rounded">A, B or C</strong>.</p>
+              
+              <div className="space-y-6 mb-10">
+                {[
+                  { num: 21, q: "The students in Akira Miyake's study were all majoring in...", opts: ["A. physics.", "B. psychology or sociology.", "C. science, technology, engineering or mathematics."] },
+                  { num: 22, q: "The aim of Miyake's study was to investigate...", opts: ["A. what kind of women choose to study physics.", "B. a way of improving women's performance in physics.", "C. whether fewer women than men study physics at college."] },
+                  { num: 23, q: "The female physics students were wrong to believe that...", opts: ["A. the teachers marked them unfairly.", "B. the male students expected them to do badly.", "C. their test results were lower than the male students'."] },
+                  { num: 24, q: "Miyake's team asked the students to write about...", opts: ["A. what they enjoyed about studying physics.", "B. the successful experiences of other people.", "C. something that was important to them personally."] },
+                  { num: 25, q: "What was the aim of the writing exercise done by the subjects?", opts: ["A. to reduce stress", "B. to strengthen verbal ability", "C. to encourage logical thinking"] },
+                  { num: 26, q: "What surprised the researchers about the study?", opts: ["A. how few students managed to get A grades", "B. the positive impact it had on physics results for women", "C. the difference between male and female performance"] },
+                  { num: 27, q: "Greg and Lisa think Miyake's results could have been affected by...", opts: ["A. the length of the writing task.", "B. the number of students who took part.", "C. the information the students were given."] },
+                  { num: 28, q: "Greg and Lisa decide that in their own project, they will compare the effects of...", opts: ["A. two different writing tasks.", "B. a writing task with an oral task.", "C. two different groups of subjects."] },
+                  { num: 29, q: "The main finding of Smolinsky's research was that class teamwork activities...", opts: ["A. were most effective when done by all-women groups.", "B. had no effect on the performance of men or women.", "C. improved the results of men more than of women."] },
+                  { num: 30, q: "What will Lisa and Greg do next?", opts: ["A. talk to a professor", "B. observe a science class", "C. look at the science timetable"] }
+                ].map(item => (
+                  <div key={item.num} className="bg-[#f8fafc] p-8 rounded-2xl border border-slate-200 shadow-sm">
+                    <p className="text-xl font-bold mb-6 text-slate-900 font-serif flex gap-4">
+                      <span className="font-black text-slate-500">{item.num}.</span> <span>{item.q}</span>
+                    </p>
+                    <div className="space-y-3 pl-10">
+                      {item.opts.map(opt => {
+                        const isSelected = answers[item.num] === opt;
+                        const isActualCorrect = answerKey11_1[item.num] === opt;
+                        
+                        let labelClass = 'bg-white border-slate-200 hover:border-fuchsia-300';
+                        if (isSubmitted) {
+                          if (isActualCorrect) labelClass = 'bg-emerald-50 border-emerald-500 shadow-sm';
+                          else if (isSelected && !isActualCorrect) labelClass = 'bg-rose-50 border-rose-500 shadow-sm opacity-50';
+                        } else if (isSelected) {
+                          labelClass = 'bg-fuchsia-50 border-fuchsia-500 shadow-sm scale-[1.01]';
+                        }
+
+                        return (
+                          <label key={opt} className={`flex items-center gap-4 p-4 rounded-xl border-2 cursor-pointer transition-all duration-300 group ${labelClass}`}>
+                            <div className="relative flex items-center justify-center">
+                              <div className={`w-5 h-5 rounded-full border-2 transition-all flex items-center justify-center ${
+                                isSubmitted && isActualCorrect ? 'border-emerald-500 bg-emerald-500' :
+                                isSubmitted && isSelected && !isActualCorrect ? 'border-rose-500 bg-rose-500' :
+                                isSelected ? 'border-fuchsia-500 bg-fuchsia-500' : 'border-slate-300 bg-white'
+                              }`}>
+                                {(isSelected || (isSubmitted && isActualCorrect)) && <div className="w-2 h-2 rounded-full bg-white" />}
+                              </div>
+                            </div>
+                            <span className={`text-lg font-serif transition-colors ${isSelected || (isSubmitted && isActualCorrect) ? 'text-slate-900 font-bold' : 'text-slate-600 group-hover:text-slate-900'}`}>{opt}</span>
+                            <input type="radio" disabled={isSubmitted} className="hidden" checked={isSelected} onChange={() => handleRadioChange(item.num, opt)} />
+                          </label>
+                        )
+                      })}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </Card>
+          </div>
+        )
+      case 4:
+        return (
+          <div className="space-y-8 animate-in slide-in-from-right-8 duration-500">
+            <Card className="bg-white border border-slate-200 rounded-3xl p-10 shadow-[0_8px_30px_rgb(0,0,0,0.04)] relative overflow-hidden transition-all">
+              <div className="absolute top-0 left-0 w-full h-1.5 bg-amber-500" />
+              
+              <h3 className="text-3xl font-black mb-2 text-slate-800">Questions 31-40</h3>
+              <p className="text-slate-500 mb-8 font-medium">Complete the notes below. Write <strong className="text-slate-800 bg-slate-100 px-2 py-0.5 rounded">ONE WORD ONLY</strong> for each answer.</p>
+              
+              <div className="bg-[#f8fafc] p-10 rounded-2xl border border-slate-200 text-lg leading-loose font-serif text-slate-700 shadow-sm">
+                <h4 className="font-black text-center text-3xl mb-10 tracking-widest font-sans text-slate-900 uppercase">Ocean Biodiversity</h4>
+                
+                <div className="space-y-10">
+                  <div>
+                    <h5 className="font-black text-amber-600 font-sans text-xl mb-4 border-b border-amber-200 pb-2">Biodiversity hotspots</h5>
+                    <ul className="list-disc ml-6 space-y-4 marker:text-amber-500">
+                      <li className="flex items-center"><span className="font-bold text-slate-500 w-8 shrink-0">31.</span> <span>areas containing many different species; important for locating targets for <InlineInput num="31" width="w-40" /></span></li>
+                      <li className="flex items-center"><span className="font-bold text-slate-500 w-8 shrink-0">32.</span> <span>at first only identified on land; Boris Worm (2005) identified marine hotspots. Found that marine hotspots were not always rich in <InlineInput num="32" width="w-40" /></span></li>
+                      <li className="flex items-center"><span className="font-bold text-slate-500 w-8 shrink-0">33.</span> <span>hotspots had higher temperatures at the <InlineInput num="33" width="w-40" /></span></li>
+                      <li className="flex items-center"><span className="font-bold text-slate-500 w-8 shrink-0">34.</span> <span>hotspots had sufficient <InlineInput num="34" width="w-40" /> in the water</span></li>
+                    </ul>
+                  </div>
+
+                  <div>
+                    <h5 className="font-black text-amber-600 font-sans text-xl mb-4 border-b border-amber-200 pb-2">Marine Research</h5>
+                    <ul className="list-disc ml-6 space-y-4 marker:text-amber-500">
+                      <li className="flex items-center"><span className="font-bold text-slate-500 w-8 shrink-0">35.</span> <span>Lisa Ballance (2007) looked for hotspots for marine <InlineInput num="35" width="w-40" /></span></li>
+                      <li className="flex items-center"><span className="font-bold text-slate-500 w-8 shrink-0">36.</span> <span>Researchers found species living under the <InlineInput num="36" width="w-40" /></span></li>
+                      <li className="flex items-center"><span className="font-bold text-slate-500 w-8 shrink-0">37.</span> <span>The Global Marine Species Assessment tracks the <InlineInput num="37" width="w-40" /> of species</span></li>
+                      <li className="flex items-center"><span className="font-bold text-slate-500 w-8 shrink-0">38.</span> <span>Researchers aim to create a <InlineInput num="38" width="w-40" /> of species distribution</span></li>
+                    </ul>
+                  </div>
+
+                  <div>
+                    <h5 className="font-black text-amber-600 font-sans text-xl mb-4 border-b border-amber-200 pb-2">Recommendations</h5>
+                    <ul className="list-disc ml-6 space-y-4 marker:text-amber-500">
+                      <li className="flex items-center"><span className="font-bold text-slate-500 w-8 shrink-0">39.</span> <span>establish <InlineInput num="39" width="w-40" /> corridors (e.g. for turtles)</span></li>
+                      <li className="flex items-center"><span className="font-bold text-slate-500 w-8 shrink-0">40.</span> <span>catch fish only for the purpose of <InlineInput num="40" width="w-40" /></span></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </Card>
+          </div>
+        )
+      default:
+        return null
+    }
+  }
+
   const renderSectionContent = () => {
     if (currentBook === 10 && currentTest === 2) return renderTest2();
     if (currentBook === 10 && currentTest === 3) return renderTest3();
     if (currentBook === 10 && currentTest === 4) return renderTest4();
+    if (currentBook === 11 && currentTest === 1) return renderBook11Test1();
     return renderTest1(); 
   }
 
@@ -1416,6 +1671,7 @@ export default function ListeningModule() {
     if (currentBook === 10 && currentTest === 2) return "nh5Ysyg2Mdw";
     if (currentBook === 10 && currentTest === 3) return "baF-agivhF8";
     if (currentBook === 10 && currentTest === 4) return "jnvpv3PZmz4";
+    if (currentBook === 11 && currentTest === 1) return "qkbIkkO_WHE";
     return "GlPAqNZmuaw"; 
   }
 
@@ -1489,12 +1745,12 @@ export default function ListeningModule() {
       <div className="flex-1 max-w-[1600px] w-full mx-auto p-6 flex flex-col gap-10 mt-6 relative z-10">
         
         <div className="flex-1 w-full max-w-5xl mx-auto">
-          <div className="flex items-center gap-4 mb-10 bg-white p-3 rounded-full border border-slate-200 shadow-sm inline-flex">
+          <div className="flex items-center gap-2 md:gap-4 mb-10 bg-white p-2 md:p-3 rounded-full border border-slate-200 shadow-sm w-full md:w-auto overflow-x-auto no-scrollbar">
             {[1, 2, 3, 4].map(sec => (
               <button
                 key={sec}
                 onClick={() => setCurrentSection(sec)}
-                className={`px-10 py-4 rounded-full font-black text-sm uppercase tracking-widest transition-all duration-300 ${currentSection === sec ? 'bg-slate-900 text-white shadow-md transform -translate-y-1' : 'text-slate-500 hover:bg-slate-100 hover:text-slate-900'}`}
+                className={`px-4 md:px-10 py-3 md:py-4 rounded-full font-black text-xs md:text-sm uppercase tracking-widest transition-all duration-300 shrink-0 ${currentSection === sec ? 'bg-slate-900 text-white shadow-md transform -translate-y-1' : 'text-slate-500 hover:bg-slate-100 hover:text-slate-900'}`}
               >
                 Part {sec}
               </button>
